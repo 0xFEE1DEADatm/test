@@ -1,20 +1,33 @@
-def sum_of_digits(num):
-    return sum(int(digit) for digit in str(num))
+def calculate_digit_sum(number):
+    return sum(int(digit) for digit in str(abs(number)))
 
 max_sum = 0
-max_num = None
+number_with_max_sum = []
 
-while True:
-    num = int(input("Введите целое число (для завершения введите 0): "))
-    if num == 0:
-        break
+try:
+    while True:
+        user_input = input("Enter an integer (0 to stop): ")
 
-    current_sum = sum_of_digits(num)
-    if current_sum > max_sum:
-        max_sum = current_sum
-        max_num = num
+        if not user_input.isdigit():
+            raise ValueError("Please enter an integer.")
 
-if max_num is not None:
-    print(f"Число с максимальной суммой цифр: {max_num}")
-else:
-    print("Вы не ввели ни одного числа.")
+        number = int(user_input)
+
+        if number == 0:
+            break
+
+        digit_sum = calculate_digit_sum(number)
+
+        if digit_sum > max_sum:
+            max_sum = digit_sum
+            number_with_max_sum = [number]
+        elif digit_sum == max_sum:
+            number_with_max_sum.append(number)
+
+    if number_with_max_sum:
+        print(f"The number(s) with the maximum sum of digits is/are: {number_with_max_sum}")
+    else:
+        print("No valid numbers were entered.")
+
+except ValueError as e:
+    print(f"Error: {e}")
